@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spot Manager</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbolinks-cache-control" content="no-cache">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="col-10 nav">
+        <a class="navbar-brand" href="/">
+          Spot Manager
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <%= link_to "首页", origin_transactions_path, class: "nav-link #{@page_index == 1 ? 'active' : ''}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "现货交易记录快照", transactions_snapshot_infos_path, class: "nav-link #{@page_index == 2 ? 'active' : ''}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "现货收益曲线图", revenue_chart_origin_transactions_path, class: "nav-link #{@page_index == 3 ? 'active' : ''}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "委托单列表", open_spot_orders_path, class: "nav-link #{@page_index == 4 ? 'active' : ''}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "合并交易记录列表", combine_transactions_path, class: "nav-link #{@page_index == 5 ? 'active' : ''}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "合并交易记录快照", combine_tx_snapshot_infos_path, class: "nav-link #{@page_index == 6 ? 'active' : ''}" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div id="spinner" class="hide">
+    <%= image_tag("loading.svg") %>
+  </div>
+  <%= render "shared/notices" %>
+  <%= yield %>
+</div>
+</body>
+</html>
