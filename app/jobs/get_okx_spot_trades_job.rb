@@ -77,7 +77,7 @@ class GetOkxSpotTradesJob < ApplicationJob
   def update_tx(tx)
     tx.current_price = get_current_price(tx.original_symbol, tx.from_symbol)
     if tx.cost.to_f.zero?
-      tx.cost = get_spot_cost(tx_id: tx.id) || tx.price
+      tx.cost = get_spot_cost(tx_id: tx.id, symbol: tx.original_symbol) || tx.price
     end
     tx.revenue = get_revenue(tx.trade_type, tx.amount, tx.cost, tx.qty, tx.current_price)
     tx.roi = tx.revenue / tx.amount
@@ -93,7 +93,7 @@ class GetOkxSpotTradesJob < ApplicationJob
   end
 
   def get_spot_cost(tx_id: nil, symbol: nil, amount: nil, qty: nil)
-    txs = OriginTransaction.available.year_to_date.where(source: SOURCE, original_symbol: original_symbol)
+    txs = OriginTransaction.available.year_to_date.where(source: SOURCE, original_symbol: symbol)
 
     if tx_id.present? && OriginTransaction.exists?(id: tx_id)
       txs = txs.where('id < ?', tx_id)
