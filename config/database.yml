@@ -3,6 +3,7 @@ default: &default
   encoding: unicode
   url: <%= ENV['DATABASE_URL'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: spot_manager
 
 development:
   <<: *default
@@ -15,3 +16,7 @@ stage:
 
 production:
   <<: *default
+
+coin_elite:
+  <<: *default
+  database: coin_elite
