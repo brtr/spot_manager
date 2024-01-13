@@ -8,6 +8,7 @@ class PageController < ApplicationController
     @symbol = params[:search]
     @trade_type = params[:trade_type]
     open_orders = OpenSpotOrder.where.not(symbol: ['BTCUSDT', 'ETHUSDT']).order(order_time: :desc)
+    @total_summary = open_orders.total_summary
     @symbols = open_orders.pluck(:symbol).uniq
     open_orders = open_orders.where(symbol: @symbol) if @symbol.present?
     open_orders = open_orders.where(trade_type: @trade_type) if @trade_type.present?
