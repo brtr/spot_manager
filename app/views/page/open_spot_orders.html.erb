@@ -8,6 +8,8 @@
           <span class='ms-3'></span>
           <%= select_tag(:trade_type, options_for_select([['买入', 'buy'], ['卖出', 'sell']], @trade_type),{ prompt: '请选择买卖类别...', class: 'select2-dropdown form-control' }) %>
           <span class='ms-3'></span>
+          <%= select_tag(:source, options_for_select(@sources, @source), { prompt: '请选择来源...', class: 'select2-dropdown form-control' }) %>
+          <span class='ms-3'></span>
           <button type="submit" class="btn btn-primary mx-3">确定</button>
           <%= link_to "Reset", open_spot_orders_path, class: 'btn btn-warning me-3' %>
         </div>
@@ -30,6 +32,7 @@
           <th>委托数量</th>
           <th>委托金额</th>
           <th>订单类型</th>
+          <th>来源</th>
         </tr>
       </thead>
       <tbody>
@@ -45,6 +48,7 @@
               <td><%= order.orig_qty.round(4) %></td>
               <td><%= order.amount.round(4) %></td>
               <td><%= order.order_type %></td>
+              <td><%= order.source %></td>
             </tr>
           <% end %>
         <% end %>

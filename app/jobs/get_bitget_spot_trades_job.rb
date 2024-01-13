@@ -55,11 +55,11 @@ class GetBitgetSpotTradesJob < ApplicationJob
   end
 
   def get_current_price(symbol, from_symbol)
-    price = $redis.get("gate_spot_price_#{symbol}").to_f
+    price = $redis.get("bitget_spot_price_#{symbol}").to_f
     if price == 0
       price = BitgetSpotsService.new.get_price(symbol)['data'].first["lastPr"].to_f rescue 0
       price = get_coin_price(from_symbol) if price.zero?
-      $redis.set("gate_spot_price_#{symbol}", price, ex: 2.hours)
+      $redis.set("bitget_spot_price_#{symbol}", price, ex: 2.hours)
     end
 
     price.to_f

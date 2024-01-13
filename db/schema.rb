@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_04_085731) do
+ActiveRecord::Schema.define(version: 2024_01_13_094822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2023_12_04_085731) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "current_price"
+    t.string "source", default: "binance"
     t.index ["order_id"], name: "index_open_spot_orders_on_order_id"
     t.index ["order_time"], name: "index_open_spot_orders_on_order_time"
     t.index ["symbol"], name: "index_open_spot_orders_on_symbol"

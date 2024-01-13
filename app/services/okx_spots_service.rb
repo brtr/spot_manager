@@ -19,6 +19,15 @@ class OkxSpotsService
     end
   end
 
+  def get_open_orders
+    begin
+      request_path = "/api/v5/trade/orders-pending?instType=SPOT"
+      do_request("get", request_path)
+    rescue => e
+      format_error_msg(e)
+    end
+  end
+
   def get_price(instId)
     begin
       request_path = "/api/v5/market/ticker?instId=#{instId}"

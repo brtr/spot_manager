@@ -19,6 +19,15 @@ class GateSpotsService
     end
   end
 
+  def get_open_orders
+    begin
+      request_path = '/api/v4/spot/open_orders'
+      do_request("get", request_path, 'account=spot')
+    rescue => e
+      format_error_msg(e)
+    end
+  end
+
   def get_price(symbol)
     begin
       request_path = "/api/v4/spot/tickers?currency_pair=#{symbol}"

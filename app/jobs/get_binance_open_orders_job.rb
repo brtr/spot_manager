@@ -1,4 +1,5 @@
 class GetBinanceOpenOrdersJob < ApplicationJob
+  SOURCE = 'binance'
   queue_as :daily_job
 
   def perform
@@ -16,7 +17,7 @@ class GetBinanceOpenOrdersJob < ApplicationJob
         symbol = open_order[:symbol]
         from_symbol = symbol.split('USDT')[0]
         current_price = get_current_price(symbol, from_symbol)
-        order = OpenSpotOrder.where(order_id: open_order[:orderId], symbol: symbol).first_or_initialize
+        order = OpenSpotOrder.where(order_id: open_order[:orderId], symbol: symbol, source: SOURCE).first_or_initialize
         order.update(
           status: open_order[:status],
           price: price,
@@ -32,7 +33,7 @@ class GetBinanceOpenOrdersJob < ApplicationJob
       end
 
       symbols = open_orders.map{|order| order[:symbol]}.uniq
-      OpenSpotOrder.where.not(symbol: symbols).delete_all
+      OpenSpotOrder.where(source: SOURCE).where.not(symbol: symbols).delete_all
     end
   end
 

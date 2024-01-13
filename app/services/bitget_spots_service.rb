@@ -19,6 +19,15 @@ class BitgetSpotsService
     end
   end
 
+  def get_open_orders
+    begin
+      request_path = "/api/v2/spot/trade/unfilled-orders"
+      do_request("get", request_path)
+    rescue => e
+      format_error_msg(e)
+    end
+  end
+
   def get_price(symbol)
     begin
       request_path = "/api/v2/spot/market/tickers?symbol=#{symbol}"
