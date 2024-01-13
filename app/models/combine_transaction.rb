@@ -51,4 +51,8 @@ class CombineTransaction < ApplicationRecord
   def cost_ratio(total_cost)
     amount / total_cost
   end
+
+  def display_name
+    "#{from_symbol} / #{fee_symbol}"
+  end
 end
