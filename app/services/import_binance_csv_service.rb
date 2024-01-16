@@ -57,13 +57,12 @@ class ImportBinanceCsvService
     data = []
     csv_data.each do |row|
       symbol = row[1]
-      event_time = DateTime.parse(row[0])
       if data.blank?
-        data.push({symbol: symbol, event_time: event_time})
+        data.push({symbol: symbol})
       else
         previous_d = data.select{|d| d[:symbol] == symbol}.last
-        next if previous_d.present? && (event_time.to_i - previous_d[:event_time].to_i).abs < 5.days.to_i
-        data.push({symbol: symbol, event_time: event_time})
+        next if previous_d.present?
+        data.push({symbol: symbol})
       end
     end
 
