@@ -53,6 +53,6 @@ class CombineTransaction < ApplicationRecord
   end
 
   def display_name
-    "#{from_symbol} / #{fee_symbol}"
+    "#{from_symbol} / #{to_symbol}"
   end
 end

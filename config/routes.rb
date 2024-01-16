@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     collection do
       get :refresh
       get :revenue_chart
+      post :import_csv
     end
   end
 

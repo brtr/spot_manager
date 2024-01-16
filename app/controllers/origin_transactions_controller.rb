@@ -42,6 +42,24 @@ class OriginTransactionsController < ApplicationController
     end.inject(:merge)
   end
 
+  def import_csv
+    if params[:files].blank?
+      flash[:alert] = "请选择文件"
+      redirect_to root_path
+    else
+      source = params[:source].presence || 'binance'
+      import_status = ImportBinanceCsvService.new(params[:files].first, source).call
+
+      if import_status[:status].to_i == 1
+        flash[:notice] = import_status[:message]
+      else
+        flash[:alert] = import_status[:message]
+      end
+
+      redirect_to root_path
+    end
+  end
+
   private
   def tx_params
     params.require(:origin_transaction).permit(:campaign)
@@ -58,12 +76,10 @@ class OriginTransactionsController < ApplicationController
     @symbol = params[:search]
     @campaign = params[:campaign]
     @source = params[:source]
-    @trade_type = params[:trade_type]
 
     txs = txs.where(campaign: @campaign) if @campaign.present?
     txs = txs.where(source: @source) if @source.present?
     txs = txs.where(original_symbol: @symbol) if @symbol.present?
-    txs = txs.where(trade_type: @trade_type) if @trade_type.present?
     txs
   end
 end
