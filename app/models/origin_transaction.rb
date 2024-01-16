@@ -57,6 +57,32 @@ class OriginTransaction < ApplicationRecord
     amount / total_cost
   end
 
+  def get_current_price_by_source
+    price = $redis.get("spot_price_#{from_symbol}_current").to_f
+    if price == 0
+      price = case source
+      when "binance"
+        BinanceSpotsService.new.get_price(original_symbol)[:price].to_f rescue 0
+      when "bitget"
+        BitgetSpotsService.new.get_price(original_symbol)['data'].first["lastPr"].to_f rescue 0
+      when "gate"
+        GateSpotsService.new.get_price(original_symbol).first["last"].to_f rescue 0
+      when "okx"
+        OkxSpotsService.new.get_price(original_symbol)["data"].first["last"].to_f rescue 0
+      end
+      price = OriginTransaction.get_coin_price(from_symbol, Date.yesterday) if price.zero?
+      $redis.set("spot_price_#{from_symbol}_current", price, ex: 2.hours)
+    end
+    price
+  end
+
+  def self.get_price_by_date(symbol, date)
+    url = ENV['COIN_ELITE_URL'] + "/api/coins/history_price?symbol=#{symbol}&from_date=#{date}&to_date=#{date}"
+    response = RestClient.get(url)
+    data = JSON.parse(response.body)
+    data['result'].values[0].to_f rescue nil
+  end
+
   private
   def self.calculate_field(records, field_name = :revenue)
     buys, sells = records.partition { |record| record.trade_type == "buy" }
