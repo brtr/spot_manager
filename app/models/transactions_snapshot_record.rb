@@ -12,7 +12,7 @@ class TransactionsSnapshotRecord < ApplicationRecord
   end
 
   def self.year_to_date
-    TransactionsSnapshotRecord.where('event_time >= ?', DateTime.parse('2023-01-01'))
+    TransactionsSnapshotRecord.where('event_time >= ? and trade_type = ?', DateTime.parse('2023-01-01'), 'buy')
   end
 
   def self.total_summary(date: Date.yesterday)

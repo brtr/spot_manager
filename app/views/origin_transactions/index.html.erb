@@ -13,7 +13,7 @@
         <span class='ms-3'></span>
         <%= select_tag(:campaign, options_for_select(@total_txs.pluck(:campaign).compact.uniq, @campaign),{ prompt: '请选择campaign...', class: 'select2-dropdown form-control' }) %>
         <span class='ms-3'></span>
-        <%= select_tag(:source, options_for_select(@total_txs.pluck(:source).compact.uniq, @source),{ prompt: '请选择来源...', class: 'select2-dropdown form-control' }) %>
+        <%= select_tag(:source, options_for_select(OriginTransaction.pluck(:source).compact.uniq, @source),{ prompt: '请选择来源...', class: 'select2-dropdown form-control' }) %>
         <span class='ms-3'></span>
         <%= text_field_tag :event_date, @event_date, class: "form-control datepicker",  type: "text", placeholder: "请选择交易日期", autocomplete: "off" %>
         <span class='ms-3'></span>

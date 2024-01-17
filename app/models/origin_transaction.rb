@@ -7,7 +7,7 @@ class OriginTransaction < ApplicationRecord
   end
 
   def self.year_to_date
-    OriginTransaction.where('event_time >= ?', DateTime.parse('2023-01-01'))
+    OriginTransaction.where('event_time >= ? and trade_type = ?', DateTime.parse('2023-01-01'), 'buy')
   end
 
   def self.total_summary

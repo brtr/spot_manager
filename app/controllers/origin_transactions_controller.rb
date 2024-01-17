@@ -47,7 +47,7 @@ class OriginTransactionsController < ApplicationController
       flash[:alert] = "请选择文件"
       redirect_to root_path
     else
-      source = params[:source].presence || 'binance'
+      source = params[:file_source].presence || 'binance'
       import_status = ImportBinanceCsvService.new(params[:files].first, source).call
 
       if import_status[:status].to_i == 1
