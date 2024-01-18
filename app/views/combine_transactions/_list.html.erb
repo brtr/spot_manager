@@ -1,6 +1,7 @@
 <table class="table">
   <thead>
     <tr class="table-container-tr">
+      <th scope="col">最新一笔交易时间</th>
       <% transactions_table_headers.each do |h| %>
         <% next if h[:sort].in? ['event_time', 'cost'] %>
         <th scope="col">
@@ -22,6 +23,7 @@
   <tbody>
     <% @txs.each do |h| %>
       <tr>
+        <td><%= h.last_trade_at.strftime('%Y-%m-%d %H:%M:%S') rescue '' %></td>
         <td><%= link_to h.display_name, origin_transactions_path(search: h.original_symbol) %></td>
         <td class="<%= trade_type_style(h.trade_type) %>"><%= h.trade_type == 'buy' ? '买入' : '卖出' %></td>
         <td data-bs-toggle="tooltip" title='<%= h.price %>'><%= h.price.round(4) %> <%= h.to_symbol %></td>

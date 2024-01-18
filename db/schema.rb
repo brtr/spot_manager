@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_13_094822) do
+ActiveRecord::Schema.define(version: 2024_01_18_090518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,14 +32,15 @@ ActiveRecord::Schema.define(version: 2024_01_13_094822) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "sold_revenue", default: "0.0"
+    t.datetime "last_trade_at"
     t.index ["original_symbol"], name: "index_combine_transactions_on_original_symbol"
     t.index ["source"], name: "index_combine_transactions_on_source"
   end
 
   create_table "combine_tx_snapshot_infos", force: :cascade do |t|
     t.date "event_date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "combine_tx_snapshot_records", force: :cascade do |t|
@@ -57,10 +58,10 @@ ActiveRecord::Schema.define(version: 2024_01_13_094822) do
     t.decimal "revenue", default: "0.0", null: false
     t.decimal "roi", default: "0.0", null: false
     t.decimal "current_price", default: "0.0", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.decimal "sold_revenue", default: "0.0"
-    t.index ["combine_tx_snapshot_info_id"], name: "index_snapshot_info"
+    t.datetime "last_trade_at"
   end
 
   create_table "open_spot_orders", force: :cascade do |t|

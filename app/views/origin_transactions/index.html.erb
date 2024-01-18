@@ -15,7 +15,9 @@
         <span class='ms-3'></span>
         <%= select_tag(:source, options_for_select(OriginTransaction.pluck(:source).compact.uniq, @source),{ prompt: '请选择来源...', class: 'select2-dropdown form-control' }) %>
         <span class='ms-3'></span>
-        <%= text_field_tag :event_date, @event_date, class: "form-control datepicker",  type: "text", placeholder: "请选择交易日期", autocomplete: "off" %>
+        <%= text_field_tag :from_date, @from_date, class: "form-control datepicker",  type: "text", placeholder: "请选择交易开始日期", autocomplete: "off" %>
+        <span class='ms-3'></span>
+        <%= text_field_tag :to_date, @to_date, class: "form-control datepicker",  type: "text", placeholder: "请选择交易结束日期", autocomplete: "off" %>
         <span class='ms-3'></span>
         <button type="submit" class="btn btn-primary mx-3">确定</button>
         <%= link_to "Reset", origin_transactions_path, class: 'btn btn-warning me-3' %>

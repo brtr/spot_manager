@@ -6,8 +6,10 @@ class OriginTransactionsController < ApplicationController
     txs = OriginTransaction.available.year_to_date.order("#{sort} #{sort_type}")
     @total_txs = txs
     txs = filter_txs(txs)
-    @event_date = Date.parse(params[:event_date]) rescue nil
-    txs = txs.where(event_time: @event_date.all_day) if @event_date.present?
+    @from_date = Date.parse(params[:from_date]) rescue nil
+    @to_date = Date.parse(params[:to_date]) rescue nil
+    txs = txs.where('event_time >= ?', @from_date) if @from_date.present?
+    txs = txs.where('event_time <= ?', @to_date) if @to_date.present?
     @txs = txs.page(params[:page]).per(20)
     @total_summary = txs.total_summary
   end
