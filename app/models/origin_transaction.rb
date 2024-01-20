@@ -58,6 +58,10 @@ class OriginTransaction < ApplicationRecord
   end
 
   def get_current_price_by_source
+    OriginTransaction.get_current_price_by_source(original_symbol, from_symbol, source)
+  end
+
+  def self.get_current_price_by_source(original_symbol, from_symbol, source)
     price = $redis.get("spot_price_#{from_symbol}_current").to_f
     if price == 0
       price = case source
@@ -81,6 +85,13 @@ class OriginTransaction < ApplicationRecord
     response = RestClient.get(url)
     data = JSON.parse(response.body)
     data['result'].values[0].to_f rescue nil
+  end
+
+  def self.update_current_price(original_symbol, source)
+    txs = OriginTransaction.where(original_symbol: original_symbol, source: source)
+    return if txs.blank?
+    price = get_current_price_by_source(original_symbol, txs.first.from_symbol, source)
+    txs.update_all(current_price: price) if price != 0
   end
 
   private
