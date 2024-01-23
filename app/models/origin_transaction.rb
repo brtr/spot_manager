@@ -80,13 +80,6 @@ class OriginTransaction < ApplicationRecord
     price
   end
 
-  def self.get_price_by_date(symbol, date)
-    url = ENV['COIN_ELITE_URL'] + "/api/coins/history_price?symbol=#{symbol}&from_date=#{date}&to_date=#{date}"
-    response = RestClient.get(url)
-    data = JSON.parse(response.body)
-    data['result'].values[0].to_f rescue nil
-  end
-
   def self.update_current_price(original_symbol, source)
     txs = OriginTransaction.where(original_symbol: original_symbol, source: source)
     return if txs.blank?
