@@ -12,7 +12,7 @@ class CoinService
       url = ENV['COIN_ELITE_URL'] + "/api/coins/history_price_by_symbol?symbol=#{symbol}&from_date=#{date}&to_date=#{date}"
       response = RestClient.get(url)
       data = JSON.parse(response.body)
-      data.values[0].to_f rescue nil
+      data['result'].values[0].to_f rescue nil
     end
 
     def get_price_range_by_dates(symbol, from_date: nil, to_date: nil)
