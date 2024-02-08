@@ -33,5 +33,21 @@ class CoinService
       data = JSON.parse(response.body)
       data rescue nil
     end
+
+    def sync_coin_history_price(symbol, from_date: nil, to_date: nil, platform: nil)
+      to_date ||= Date.yesterday
+      from_date ||= to_date - 1.year
+      platform ||= 'cmc'
+      url = ENV['COIN_ELITE_URL'] + '/api/coins/sync'
+      payload = {
+        symbol: symbol,
+        start_date: from_date,
+        end_date: to_date,
+        platform: platform
+      }
+      response = RestClient.post(url, payload)
+      data = JSON.parse(response.body)
+      data rescue nil
+    end
   end
 end
