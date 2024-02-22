@@ -10,10 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_18_090518) do
+ActiveRecord::Schema.define(version: 2024_02_22_002520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "aggregate_transactions", force: :cascade do |t|
+    t.string "original_symbol"
+    t.string "from_symbol"
+    t.string "to_symbol"
+    t.string "fee_symbol"
+    t.decimal "price", default: "0.0", null: false
+    t.decimal "qty", default: "0.0", null: false
+    t.decimal "amount", default: "0.0", null: false
+    t.decimal "fee", default: "0.0", null: false
+    t.decimal "revenue", default: "0.0", null: false
+    t.decimal "roi", default: "0.0", null: false
+    t.decimal "current_price", default: "0.0", null: false
+    t.decimal "percentage_24h"
+    t.decimal "percentage_7d"
+    t.datetime "last_trade_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["from_symbol"], name: "index_aggregate_transactions_on_from_symbol"
+    t.index ["original_symbol"], name: "index_aggregate_transactions_on_original_symbol"
+  end
+
+  create_table "aggregate_tx_snapshot_infos", force: :cascade do |t|
+    t.date "event_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "aggregate_tx_snapshot_records", force: :cascade do |t|
+    t.bigint "aggregate_tx_snapshot_info_id"
+    t.string "original_symbol"
+    t.string "from_symbol"
+    t.string "to_symbol"
+    t.string "fee_symbol"
+    t.decimal "price", default: "0.0", null: false
+    t.decimal "qty", default: "0.0", null: false
+    t.decimal "amount", default: "0.0", null: false
+    t.decimal "fee", default: "0.0", null: false
+    t.decimal "revenue", default: "0.0", null: false
+    t.decimal "roi", default: "0.0", null: false
+    t.decimal "current_price", default: "0.0", null: false
+    t.decimal "percentage_24h"
+    t.decimal "percentage_7d"
+    t.datetime "last_trade_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["aggregate_tx_snapshot_info_id"], name: "index_aggregate_snapshot_info"
+  end
 
   create_table "combine_transactions", force: :cascade do |t|
     t.string "source"

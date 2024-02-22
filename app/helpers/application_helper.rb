@@ -11,7 +11,7 @@ module ApplicationHelper
       },
       {
         name: "类别",
-        sort: "none"
+        sort: "trade_type"
       },
       {
         name: "成交价",
@@ -51,7 +51,60 @@ module ApplicationHelper
       },
       {
         name: "来源",
+        sort: "source"
+      }
+    ]
+  end
+
+  def aggregate_tx_table_headers
+    [
+      {
+        name: "最后交易时间",
+        sort: "last_trade_at"
+      },
+      {
+        name: "交易对",
+        sort: "from_symbol"
+      },
+      {
+        name: "成交价",
+        sort: "price"
+      },
+      {
+        name: "当前价",
         sort: "none"
+      },
+      {
+        name: "数量",
+        sort: "none"
+      },
+      {
+        name: "交易金额",
+        sort: "amount"
+      },
+      {
+        name: "24h",
+        sort: "percentage_24h"
+      },
+      {
+        name: "7d",
+        sort: "percentage_7d"
+      },
+      {
+        name: "币种投入/总投入",
+        sort: "cost_ratio"
+      },
+      {
+        name: "预计收益 / 实际收益",
+        sort: "revenue"
+      },
+      {
+        name: "预计ROI / 实际ROI",
+        sort: "roi"
+      },
+      {
+        name: "收益/总收益",
+        sort: "revenue_ratio"
       }
     ]
   end

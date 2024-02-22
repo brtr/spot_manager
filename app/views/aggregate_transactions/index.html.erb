@@ -1,0 +1,27 @@
+<div class="m-3 row">
+  <h3>汇总交易记录列表</h3>
+  <div class="mb-3 mt-3 col-5">
+    <%= form_tag aggregate_transactions_path, id: "search_targets", class: "position-relative", method: "GET" do %>
+      <div class="input-group mb-3 position-filter">
+        <%= select_tag(:search, options_for_select(AggregateTransaction.pluck(:original_symbol).uniq, @symbol), { prompt: '请选择币种...', class: 'select2-dropdown form-control' }) %>
+        <span class='ms-3'></span>
+        <%= text_field_tag :from_date, @from_date, class: "form-control datepicker",  type: "text", placeholder: "请选择交易开始日期", autocomplete: "off" %>
+        <span class='ms-3'></span>
+        <%= text_field_tag :to_date, @to_date, class: "form-control datepicker",  type: "text", placeholder: "请选择交易结束日期", autocomplete: "off" %>
+        <span class='ms-3'></span>
+        <button type="submit" class="btn btn-primary mx-3">确定</button>
+        <%= link_to "Reset", aggregate_transactions_path, class: 'btn btn-warning' %>
+      </div>
+    <% end %>
+  </div>
+  <div>
+    <div class="p-3">
+      <p>总投入: <%= @total_summary[:total_cost].to_f.round(4) %> / 绝对盈利: <%= price_change_style @total_summary[:total_revenue].to_f.round(4) %> / 总ROI: <%= price_change_style @total_summary[:total_roi].round(2) %>%</p>
+      <p>盈利总数量: <span class="pos-num"><%= @total_summary[:profit_count] %></span>  / 盈利总金额: <%= price_change_style @total_summary[:profit_amount].to_f.round(4) %> </p>
+      <p>亏损总数量: <span class="neg-num"><%= @total_summary[:loss_count] %></span>  / 亏损总金额: <%= price_change_style @total_summary[:loss_amount].to_f.round(4) %> </p>
+    </div>
+  </div>
+  <div id="trading-histories-container">
+    <%= render partial: "list" %>
+  </div>
+</div>

@@ -49,5 +49,12 @@ class CoinService
       data = JSON.parse(response.body)
       data rescue nil
     end
+
+    def get_percent_changes(symbols)
+      url = ENV['COIN_ELITE_URL'] + "/api/coins/percent_changes?symbols=#{Base64.encode64(symbols.uniq.map(&:downcase).join(','))}"
+      response = RestClient.get(url)
+      data = JSON.parse(response.body)
+      data['result'] rescue nil
+    end
   end
 end

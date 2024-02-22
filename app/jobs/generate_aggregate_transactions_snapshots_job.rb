@@ -1,8 +1,8 @@
-class GenerateCombineTransactionsSnapshotsJob < ApplicationJob
+class GenerateAggregateTransactionsSnapshotsJob < ApplicationJob
   queue_as :daily_job
 
   def perform(date: Date.today)
-    transactions_snapshot_info = CombineTxSnapshotInfo.where(event_date: date).first_or_create
+    transactions_snapshot_info = AggregateTxSnapshotInfo.where(event_date: date).first_or_create
 
     generate_snapshot(transactions_snapshot_info)
 
@@ -12,14 +12,12 @@ class GenerateCombineTransactionsSnapshotsJob < ApplicationJob
   private
 
   def generate_snapshot(transactions_snapshot_info)
-    txs = CombineTransaction.all
+    txs = AggregateTransaction.all
 
     txs.find_each(batch_size: 100) do |tx|
-      CombineTxSnapshotInfo.transaction do
-        transactions_snapshot_record = transactions_snapshot_info.combine_tx_snapshot_records.find_or_initialize_by(
+      AggregateTxSnapshotInfo.transaction do
+        transactions_snapshot_record = transactions_snapshot_info.aggregate_tx_snapshot_records.find_or_initialize_by(
           original_symbol: tx.original_symbol,
-          trade_type: tx.trade_type,
-          source: tx.source,
           from_symbol: tx.from_symbol,
           to_symbol: tx.to_symbol,
           fee_symbol: tx.fee_symbol
@@ -34,6 +32,8 @@ class GenerateCombineTransactionsSnapshotsJob < ApplicationJob
           current_price: tx.current_price,
           revenue: tx.revenue,
           roi: tx.roi,
+          percentage_24h: tx.percentage_24h,
+          percentage_7d: tx.percentage_7d,
           last_trade_at: tx.last_trade_at
         )
       end

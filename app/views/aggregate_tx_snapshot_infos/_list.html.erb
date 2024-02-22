@@ -1,0 +1,37 @@
+<table class="table">
+  <thead>
+    <tr class="table-container-tr">
+      <% aggregate_tx_table_headers.each do |h| %>
+        <th scope="col">
+          <% if h[:sort] == "none" %>
+            <%= "#{h[:name]}" %>
+          <% else %>
+            <%= link_to "#{h[:name]}", combine_tx_snapshot_info_path(ch_remote_params(params, h[:sort])), remote: true, class: "#{params[:sort] == h[:sort] ? 'text-primary' : ''}" %>
+          <% end %>
+        </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @records.each do |h| %>
+      <tr>
+        <td><%= h.last_trade_at.strftime('%Y-%m-%d %H:%M:%S') rescue '' %></td>
+        <td><%= h.from_symbol %> / <%= h.to_symbol %></td>
+        <td><%= h.price.round(4) %> <%= h.to_symbol %></td>
+        <td><%= h.current_price.round(4) %> <%= h.to_symbol %></td>
+        <td><%= h.qty.round(4) %></td>
+        <td><%= h.amount.round(4) %> <%= h.to_symbol %></td>
+        <td><%= h.percentage_24h.round(4) rescue nil %>%</td>
+        <td><%= h.percentage_7d.round(4) rescue nil %>%</td>
+        <td><%= "#{(h.cost_ratio(@total_summary[:total_cost].to_f) * 100).round(4)}%" %></td>
+        <td class="<%= h.revenue > 0 ? 'pos-num' : 'neg-num' %>"><%= "#{h.revenue.round(4)} #{h.to_symbol}" %></td>
+        <td class="<%= h.roi > 0 ? 'pos-num' : 'neg-num' %>" ><%= "#{(h.roi * 100).round(4)}%" %></td>
+        <td><%= "#{(h.revenue_ratio(@total_summary[:total_cost].to_f) * 100).round(4)}%" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="paginationBox p-4">
+  <%= paginate @records %>
+</div>

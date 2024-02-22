@@ -42,6 +42,12 @@
             <li class="nav-item">
               <%= link_to "合并交易记录快照", combine_tx_snapshot_infos_path, class: "nav-link #{@page_index == 6 ? 'active' : ''}" %>
             </li>
+            <li class="nav-item">
+              <%= link_to "汇总交易记录列表", aggregate_transactions_path, class: "nav-link #{@page_index == 7 ? 'active' : ''}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "汇总交易记录快照", aggregate_tx_snapshot_infos_path, class: "nav-link #{@page_index == 8 ? 'active' : ''}" %>
+            </li>
           </ul>
         </div>
       </div>

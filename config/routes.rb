@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :combine_transactions, only: :index
   resources :transactions_snapshot_infos, only: [:index, :show]
   resources :combine_tx_snapshot_infos, only: [:index, :show]
+  resources :aggregate_transactions, only: :index
+  resources :aggregate_tx_snapshot_infos, only: [:index, :show]
 
   get "/open_spot_orders" => "page#open_spot_orders", as: :open_spot_orders
   get "/healthcheck", to: "page#health_check"
