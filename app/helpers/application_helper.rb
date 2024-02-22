@@ -59,10 +59,6 @@ module ApplicationHelper
   def aggregate_tx_table_headers
     [
       {
-        name: "最后交易时间",
-        sort: "last_trade_at"
-      },
-      {
         name: "交易对",
         sort: "from_symbol"
       },

@@ -15,7 +15,6 @@
   <tbody>
     <% @records.each do |h| %>
       <tr>
-        <td><%= h.last_trade_at.strftime('%Y-%m-%d %H:%M:%S') rescue '' %></td>
         <td><%= h.from_symbol %> / <%= h.to_symbol %></td>
         <td><%= h.price.round(4) %> <%= h.to_symbol %></td>
         <td><%= h.current_price.round(4) %> <%= h.to_symbol %></td>
