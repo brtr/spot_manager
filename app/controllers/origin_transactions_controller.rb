@@ -62,6 +62,21 @@ class OriginTransactionsController < ApplicationController
     end
   end
 
+  def filter_by_campaign
+    @page_index = 9
+    @campaign = params[:campaign]
+    txs = OriginTransaction.available.year_to_date.order(event_time: :desc)
+    @total_txs = txs
+
+    if @campaign.present?
+      txs = txs.where(campaign: @campaign)
+      @txs = txs.page(params[:page]).per(20)
+      @total_summary = txs.total_summary
+    else
+      @result = CampaignFilterService.execute(txs)
+    end
+  end
+
   private
   def tx_params
     params.require(:origin_transaction).permit(:campaign)

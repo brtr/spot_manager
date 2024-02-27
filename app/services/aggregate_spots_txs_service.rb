@@ -2,7 +2,7 @@ class AggregateSpotsTxsService
   class << self
     def execute
       AggregateTransaction.transaction do
-        OriginTransaction.available.year_to_date.where(trade_type: 'buy').order(event_time: :asc).group_by(&:original_symbol).each do |original_symbol, origin_txs|
+        OriginTransaction.available.year_to_date.where(trade_type: 'buy').order(event_time: :asc).group_by(&:from_symbol).each do |from_symbol, origin_txs|
           total_cost = 0
           total_qty = 0
           total_fee = 0
@@ -14,7 +14,8 @@ class AggregateSpotsTxsService
           end
   
           origin_tx = origin_txs.last
-          aggregate_tx = AggregateTransaction.where(original_symbol: original_symbol, from_symbol: origin_tx.from_symbol, to_symbol: origin_tx.to_symbol,
+          to_symbol = origin_tx.to_symbol
+          aggregate_tx = AggregateTransaction.where(original_symbol: "#{from_symbol}#{to_symbol}", from_symbol: from_symbol, to_symbol: to_symbol,
                                                     fee_symbol: origin_tx.fee_symbol).first_or_create
   
           price = total_qty.zero? ? 0 : total_cost / total_qty

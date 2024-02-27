@@ -1,0 +1,29 @@
+<div class="m-3">
+  <div class="mb-3 mt-3">
+    <%= form_tag filter_by_campaign_origin_transactions_path, id: "search_targets", class: "position-relative", method: "GET" do %>
+      <div class="input-group mb-3 position-filter">
+        <%= select_tag(:campaign, options_for_select(@total_txs.pluck(:campaign).compact.uniq, @campaign),{ prompt: '请选择campaign...', class: 'select2-dropdown form-control' }) %>
+        <span class='ms-3'></span>
+        <button type="submit" class="btn btn-primary mx-3">确定</button>
+        <%= link_to "Reset", filter_by_campaign_origin_transactions_path, class: 'btn btn-warning me-3' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="mb-3">
+    <% if @campaign.blank? %>
+      <% @result.each do |campaign, r| %>
+        <div class="h5">
+          <h3><%= campaign %></h3>
+          <p>总投入: <%= r[:total_cost].to_f.round(4) %> / 总盈利: <%= price_change_style r[:total_estimated_revenue].to_f.round(4) %> / 总ROI: <%= price_change_style ((r[:total_roi]) * 100).round(4) %>%</p>
+          <p>盈利总数量: <span class="pos-num"><%= r[:profit_count] %></span>  / 盈利总金额: <%= price_change_style r[:profit_amount].to_f.round(4) %> </p>
+          <p>亏损总数量: <span class="neg-num"><%= r[:loss_count] %></span>  / 亏损总金额: <%= price_change_style r[:loss_amount].to_f.round(4) %> </p>
+        </div>
+        <%= render partial: 'campaign_filter_list', locals: {r: r} %>
+      <% end %>
+    <% else %>
+      <div id="trading-histories-container">
+        <%= render partial: "list" %>
+      </div>
+    <% end %>
+  </div>
+</div>

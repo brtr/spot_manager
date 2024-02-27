@@ -17,8 +17,8 @@ class OriginTransaction < ApplicationRecord
     total_cost = calculate_field(records, :amount)
     total_estimated_revenue = records.where(trade_type: 'buy').sum(&:revenue)
     total_roi = total_cost.zero? ? 0 : total_estimated_revenue / total_cost
-    date = Date.yesterday
-    infos = TransactionsSnapshotInfo.where("event_date <= ?", date)
+    # date = Date.yesterday
+    # infos = TransactionsSnapshotInfo.where("event_date <= ?", date)
 
     {
       profit_count: profit_records.count,
@@ -74,7 +74,7 @@ class OriginTransaction < ApplicationRecord
       when "okx"
         OkxSpotsService.new.get_price(original_symbol)["data"].first["last"].to_f rescue 0
       end
-      price = OriginTransaction.get_coin_price(from_symbol, Date.yesterday) if price.zero?
+      price = CoinService.get_price_by_date(from_symbol, date: Date.yesterday) if price.zero?
       $redis.set("spot_price_#{from_symbol}_current", price, ex: 2.hours)
     end
     price

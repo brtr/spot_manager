@@ -28,6 +28,9 @@
               <%= link_to "首页", origin_transactions_path, class: "nav-link #{@page_index == 1 ? 'active' : ''}" %>
             </li>
             <li class="nav-item">
+              <%= link_to "Campaign分组交易记录", filter_by_campaign_origin_transactions_path, class: "nav-link #{@page_index == 9 ? 'active' : ''}" %>
+            </li>
+            <li class="nav-item">
               <%= link_to "现货交易记录快照", transactions_snapshot_infos_path, class: "nav-link #{@page_index == 2 ? 'active' : ''}" %>
             </li>
             <li class="nav-item">
