@@ -19,6 +19,7 @@ class GetBinanceOpenOrdersJob < ApplicationJob
         current_price = get_current_price(symbol, from_symbol)
         order = OpenSpotOrder.where(order_id: open_order[:orderId], symbol: symbol, source: SOURCE).first_or_initialize
         order.update(
+          from_symbol: from_symbol,
           status: open_order[:status],
           price: price,
           current_price: current_price,
