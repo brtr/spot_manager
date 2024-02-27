@@ -8,7 +8,7 @@ class GetGateOpenOrdersJob < ApplicationJob
     OpenSpotOrder.transaction do
       open_orders.each do |open_order|
         symbol = open_order['currency_pair']
-        from_symbol = symbol.split('USDT')[0]
+        from_symbol = symbol.split('_USDT')[0]
         open_order['orders'].each do |o|
           price = o['price'].to_f
           qty = o['amount'].to_f

@@ -81,7 +81,7 @@ class OriginTransactionsController < ApplicationController
 
     txs = txs.where(campaign: @campaign) if @campaign.present?
     txs = txs.where(source: @source) if @source.present?
-    txs = txs.where(original_symbol: @symbol) if @symbol.present?
+    txs = txs.where(from_symbol: @symbol) if @symbol.present?
     txs
   end
 end

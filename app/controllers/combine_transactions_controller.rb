@@ -10,7 +10,7 @@ class CombineTransactionsController < ApplicationController
     txs = txs.where('last_trade_at >= ?', @from_date) if @from_date.present?
     txs = txs.where('last_trade_at <= ?', @to_date) if @to_date.present?
     txs = txs.where(source: params[:source]) if params[:source].present?
-    txs = txs.where(original_symbol: @symbol) if @symbol.present?
+    txs = txs.where(from_symbol: @symbol) if @symbol.present?
     @txs = txs.page(params[:page]).per(20)
     @total_summary = txs.total_summary
   end

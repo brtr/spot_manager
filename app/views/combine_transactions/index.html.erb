@@ -3,7 +3,7 @@
   <div class="mb-3 mt-3 col-5">
     <%= form_tag combine_transactions_path, id: "search_targets", class: "position-relative", method: "GET" do %>
       <div class="input-group mb-3 position-filter">
-        <%= select_tag(:search, options_for_select(CombineTransaction.pluck(:original_symbol).uniq, @symbol), { prompt: '请选择币种...', class: 'select2-dropdown form-control' }) %>
+        <%= select_tag(:search, options_for_select(CombineTransaction.pluck(:from_symbol).uniq, @symbol), { prompt: '请选择币种...', class: 'select2-dropdown form-control' }) %>
         <%= select_tag(:source, options_for_select(CombineTransaction.pluck(:source).compact.uniq, params[:source]),{ prompt: '请选择来源...', class: 'select2-dropdown form-control' }) %>
         <span class='ms-3'></span>
         <%= text_field_tag :from_date, @from_date, class: "form-control datepicker",  type: "text", placeholder: "请选择交易开始日期", autocomplete: "off" %>
