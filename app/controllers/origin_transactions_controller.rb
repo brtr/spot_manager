@@ -20,14 +20,7 @@ class OriginTransactionsController < ApplicationController
 
   def update
     @tx = OriginTransaction.find_by_id params[:id]
-    if tx_params[:campaign].present?
-      @tx.update(tx_params)
-      flash[:notice] = "更新成功"
-    else
-      flash[:alert] = "campaign不能为空，请重新输入"
-    end
-
-    redirect_to origin_transactions_path
+    @tx.update(tx_params)
   end
 
   def refresh
