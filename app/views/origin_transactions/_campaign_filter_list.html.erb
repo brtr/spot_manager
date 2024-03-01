@@ -7,6 +7,7 @@
           <%= "#{h[:name]}" %>
         </th>
       <% end %>
+      <th>当前价相对于成本价的涨跌</th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +21,7 @@
         <td><%= h[:percentage_24h].round(4) rescue nil %>%</td>
         <td><%= h[:percentage_7d].round(4) rescue nil %>%</td>
         <td class="<%= h[:revenue] > 0 ? 'pos-num' : 'neg-num' %>"><%= "#{h[:revenue].round(4)} USDT" %></td>
+        <td class="<%= h[:margin_price] > 0 ? 'pos-num' : 'neg-num' %>"><%= h[:margin_price].round(4) %> USDT</td>
       </tr>
     <% end %>
   </tbody>

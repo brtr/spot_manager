@@ -63,7 +63,7 @@ module ApplicationHelper
         sort: "from_symbol"
       },
       {
-        name: "成交价",
+        name: "成本价",
         sort: "price"
       },
       {
@@ -91,7 +91,7 @@ module ApplicationHelper
         sort: "cost_ratio"
       },
       {
-        name: "预计收益 / 实际收益",
+        name: "预计收益",
         sort: "revenue"
       },
       {
