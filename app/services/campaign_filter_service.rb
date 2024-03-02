@@ -48,13 +48,15 @@ class CampaignFilterService
         revenue = current_price * total_qty - total_cost
         roi = revenue / total_cost.abs
         margin_price = current_price - price
+        rate = margin_price / price
         r = percent_changes.select{|pc| pc[0].upcase == from_symbol}.first || []
 
         data.push({
           symbol: "#{from_symbol}#{to_symbol}", cost: total_cost,
           price: price, qty: total_qty, amount: total_cost,
           current_price: current_price, revenue: revenue,
-          percentage_24h: r[1], percentage_7d: r[2], margin_price: margin_price
+          percentage_24h: r[1], percentage_7d: r[2], margin_price: margin_price,
+          rate: rate
         })
       end
       data

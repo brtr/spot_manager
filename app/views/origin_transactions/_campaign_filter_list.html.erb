@@ -21,7 +21,7 @@
         <td><%= h[:percentage_24h].round(4) rescue nil %>%</td>
         <td><%= h[:percentage_7d].round(4) rescue nil %>%</td>
         <td class="<%= h[:revenue] > 0 ? 'pos-num' : 'neg-num' %>"><%= "#{h[:revenue].round(4)} USDT" %></td>
-        <td class="<%= h[:margin_price] > 0 ? 'pos-num' : 'neg-num' %>"><%= h[:margin_price].round(4) %> USDT</td>
+        <td class="<%= h[:margin_price] > 0 ? 'pos-num' : 'neg-num' %>"><%= h[:margin_price].round(4) %> USDT (<%= (h[:rate] * 100).round(2) %>%)</td>
       </tr>
     <% end %>
   </tbody>
