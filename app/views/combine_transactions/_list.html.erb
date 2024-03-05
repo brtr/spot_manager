@@ -24,7 +24,7 @@
     <% @txs.each do |h| %>
       <tr>
         <td><%= h.last_trade_at.strftime('%Y-%m-%d %H:%M:%S') rescue '' %></td>
-        <td><%= link_to h.display_name, origin_transactions_path(search: h.original_symbol) %></td>
+        <td><%= link_to h.display_name, origin_transactions_path(search: h.from_symbol) %></td>
         <td class="<%= trade_type_style(h.trade_type) %>"><%= h.trade_type == 'buy' ? '买入' : '卖出' %></td>
         <td data-bs-toggle="tooltip" title='<%= h.price %>'><%= h.price.round(4) %> <%= h.to_symbol %></td>
         <td data-bs-toggle="tooltip" title='<%= h.current_price %>'><%= h.current_price.round(4) %> <%= h.to_symbol %></td>
