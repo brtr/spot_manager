@@ -49,7 +49,7 @@ class CampaignFilterService
         roi = revenue / total_cost.abs
         margin_price = current_price - price
         rate = margin_price / price
-        r = percent_changes.select{|pc| pc[0].upcase == from_symbol}.first || []
+        r = percent_changes.select{|pc| pc[0].upcase == from_symbol}.first rescue []
 
         data.push({
           symbol: "#{from_symbol}#{to_symbol}", cost: total_cost,

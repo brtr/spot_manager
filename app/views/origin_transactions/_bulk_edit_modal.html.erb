@@ -1,0 +1,25 @@
+<!-- Modal -->
+
+<div class="modal fade" id="bulkEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="importModalLabel">批量设置campaign</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_tag bulk_update_origin_transactions_path, remote: true do |f| %>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">campaign名称:</label>
+            <%= text_field_tag :campaign, nil, class: "form-control", placeholder: '' %>
+            <%= hidden_field_tag :ids, params[:ids] %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+          <%= submit_tag "确定", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

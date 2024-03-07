@@ -38,4 +38,28 @@ $(document).on("ajax:before ajaxStart page:fetch turbolinks:click turbolinks:loa
         endDate: moment().toDate(),
         initialDate: moment().toDate()
     })
+
+    $("#check_all").on('click', function () {
+        var ids = []
+        $(".check").prop('checked', $(this).prop('checked'));
+        $(".check:checked").each(function() {
+            ids.push($(this).parents('tr').data('id'))
+        })
+        $('#selected_ids').val(ids);
+    });
+
+    $(".check").on('change', function () {
+        var ids = []
+        $(".check:checked").each(function() {
+            ids.push($(this).parents('tr').data('id'))
+        })
+        $('#selected_ids').val(ids);
+    })
+
+    $("#bulkEditBtn").on('click', function (e) {
+        e.preventDefault();
+        var ids = $('#selected_ids').val();
+        var link = '/origin_transactions/bulk_edit?ids=' + encodeURIComponent(ids)
+        $(this).attr('href', link);
+    })
 });

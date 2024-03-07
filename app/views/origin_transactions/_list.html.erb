@@ -1,6 +1,8 @@
 <table class="table">
   <thead>
     <tr class="table-container-tr">
+      <th>全选<%= check_box_tag :check_all %></th>
+      <%= hidden_field_tag :selected_ids %>
       <% transactions_table_headers.each do |h| %>
         <th scope="col">
           <% if h[:sort] == "none" %>

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       get :revenue_chart
       post :import_csv
       get :filter_by_campaign
+      get :bulk_edit
+      post :bulk_update
     end
   end
 

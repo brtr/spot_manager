@@ -4,6 +4,7 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
       上传交易记录
     </button>
+    <%= link_to "批量设置campaign", bulk_edit_origin_transactions_path, class: "btn btn-warning", id: 'bulkEditBtn', remote: true %>
   </h3>
 
   <div class="mb-3 mt-3">

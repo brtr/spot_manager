@@ -1,4 +1,5 @@
 <tr data-id="<%= h.id %>">
+  <td><%= check_box_tag :set_campaign, nil, false, class: 'check' %></td>
   <td><%= h.event_time.strftime('%Y-%m-%d %H:%M:%S') rescue '' %></td>
   <td><%= h.from_symbol %> / <%= h.to_symbol %></td>
   <td class="<%= trade_type_style(h.trade_type) %>"><%= h.trade_type == 'buy' ? '买入' : '卖出' %></td>

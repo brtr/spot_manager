@@ -23,6 +23,16 @@ class OriginTransactionsController < ApplicationController
     @tx.update(tx_params)
   end
 
+  def bulk_edit
+  end
+
+  def bulk_update
+    @txs = OriginTransaction.where(id: params[:ids].split(','))
+    @txs.update_all(campaign: params[:campaign])
+
+    redirect_to origin_transactions_path, notice: "批量更新campaign成功"
+  end
+
   def refresh
     GetSpotTransactionsJob.perform_later
 
