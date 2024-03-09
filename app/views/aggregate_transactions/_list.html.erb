@@ -21,7 +21,7 @@
   <tbody>
     <% @txs.each do |h| %>
       <tr>
-        <td><%= link_to h.display_name, origin_transactions_path(search: h.from_symbol) %></td>
+        <td><%= link_to h.original_symbol, origin_transactions_path(search: h.from_symbol) %></td>
         <td data-bs-toggle="tooltip" title='<%= h.price %>'><%= h.price.round(4) %> <%= h.to_symbol %></td>
         <td data-bs-toggle="tooltip" title='<%= h.current_price %>'><%= h.current_price.round(4) %> <%= h.to_symbol %></td>
         <td><%= h.qty.round(4) %></td>

@@ -51,8 +51,4 @@ class AggregateTransaction < ApplicationRecord
   def cost_ratio(total_cost)
     amount / total_cost
   end
-
-  def display_name
-    "#{from_symbol} / #{to_symbol}"
-  end
 end
