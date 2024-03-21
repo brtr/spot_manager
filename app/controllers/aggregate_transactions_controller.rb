@@ -12,5 +12,12 @@ class AggregateTransactionsController < ApplicationController
     txs = txs.where(from_symbol: @symbol) if @symbol.present?
     @txs = txs.page(params[:page]).per(20)
     @total_summary = txs.total_summary
+
+    respond_to do |format|
+      format.html
+      format.json { 
+        render json: @txs 
+      }
+    end
   end
 end
